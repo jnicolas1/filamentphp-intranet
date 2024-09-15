@@ -7,6 +7,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## PAQUETES USADOS PARA CIUDADES
+Trae automaticamtne todos los paises, estados y ciudades de todo el mundo https://packagist.org/packages/altwaireb/laravel-world
+
 ## CURSO DE FILAMENTPHP DE CERO A EXPERTO
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
