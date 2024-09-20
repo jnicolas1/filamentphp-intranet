@@ -25,7 +25,7 @@ class TimesheetResource extends Resource
     //AQUI USAMOS QUERY PARA FILTRAR Y QUE SOLO VEA SUS PROPIAS VACACIONES (HOLIDAYS)
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('user_id', Auth::user()->id);
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->orderBy('id','desc');
     }
 
     public static function form(Form $form): Form
