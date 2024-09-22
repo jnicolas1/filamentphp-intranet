@@ -20,8 +20,27 @@ use Illuminate\Support\Facades\Auth;
 class HolidayResource extends Resource
 {
     protected static ?string $model = Holiday::class;
+    protected static ?string $navigationLabel = 'Vacaciones';
+
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
+    //AQUI nos trae la cantidad de items que tiene  la lista
+    public static function getNavigationBadge(): ?string
+    {
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->where('type', 'pending')->count();
+    }
+
+    //AQUI nos pinta de un color segun la condicion de cantidad de items
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return parent::getEloquentQuery()->where('user_id', Auth::user()->id)->where('type', 'pending')->count() > 1 ? 'warning' : 'info';
+    }
+
+    //AQUI podemos poner un texto que haga referencia a lo que significa el numero que aparece
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'The number of pending holidays';
+    }
 
     //AQUI USAMOS QUERY PARA FILTRAR Y QUE SOLO VEA SUS PROPIAS VACACIONES (HOLIDAYS)
     public static function getEloquentQuery(): Builder
@@ -29,7 +48,9 @@ class HolidayResource extends Resource
         return parent::getEloquentQuery()->where('user_id', Auth::user()->id);
     }
 
-    
+
+
+
 
     public static function form(Form $form): Form
     {
@@ -75,12 +96,12 @@ class HolidayResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('type')
-                ->options([
-                    'pending' => 'Pending',
-                    'approved' => 'Approved',
-                    'decline' => 'Decline',
-                ]),
-            Filter::make('calendar_id')
+                    ->options([
+                        'pending' => 'Pending',
+                        'approved' => 'Approved',
+                        'decline' => 'Decline',
+                    ]),
+                Filter::make('calendar_id')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

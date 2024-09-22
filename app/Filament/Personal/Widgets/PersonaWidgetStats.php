@@ -41,30 +41,30 @@ class PersonaWidgetStats extends BaseWidget
     protected function getTotalWork(User $user)
     {
         $timesheets = Timesheet::where('user_id', $user->id)
-            ->where('type', 'work')->whereDate('created_at',Carbon::today())->get();
+            ->where('type', 'work')->whereDate('created_at', Carbon::today())->get();
         $sumSeconds = 0;
         foreach ($timesheets as $timesheet) {
             $starTime = Carbon::parse($timesheet->day_in);
             $finishTime = Carbon::parse($timesheet->day_out);
-            $totalDuration = $starTime->diffInSeconds($finishTime);            
-            $sumSeconds = $sumSeconds + $totalDuration;            
+            $totalDuration = $starTime->diffInSeconds($finishTime);
+            $sumSeconds = $sumSeconds + $totalDuration;
         }
-        $tiempoCarbon = gmdate('H:i:s',$sumSeconds);
+        $tiempoCarbon = gmdate('H:i:s', $sumSeconds);
         return $tiempoCarbon;
     }
 
     protected function getTotalPause(User $user)
     {
         $timesheets = Timesheet::where('user_id', $user->id)
-            ->where('type', 'pause')->whereDate('created_at',Carbon::today())->get();
+            ->where('type', 'pause')->whereDate('created_at', Carbon::today())->get();
         $sumSeconds = 0;
         foreach ($timesheets as $timesheet) {
             $starTime = Carbon::parse($timesheet->day_in);
             $finishTime = Carbon::parse($timesheet->day_out);
-            $totalDuration = $starTime->diffInSeconds($finishTime);            
-            $sumSeconds = $sumSeconds + $totalDuration;            
+            $totalDuration = $starTime->diffInSeconds($finishTime);
+            $sumSeconds = $sumSeconds + $totalDuration;
         }
-        $tiempoCarbon = gmdate('H:i:s',$sumSeconds);
+        $tiempoCarbon = gmdate('H:i:s', $sumSeconds);
         return $tiempoCarbon;
     }
 }

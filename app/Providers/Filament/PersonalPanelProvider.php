@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -54,6 +55,18 @@ class PersonalPanelProvider extends PanelProvider
             ->databaseNotifications()
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->sidebarFullyCollapsibleOnDesktop()//sirve para añadir un icono para minimizar el slide izquierdo
+            //plugin para usar shield
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+            ])
+            ->navigationItems([
+                NavigationItem::make('Repositorio Github')
+                    ->url('https://github.com/jnicolas1/filamentphp-intranet', shouldOpenInNewTab: true)
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->sort(3)
             ]);
+            ;
     }
 }
