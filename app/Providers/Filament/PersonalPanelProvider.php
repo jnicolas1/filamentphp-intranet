@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
@@ -64,9 +65,22 @@ class PersonalPanelProvider extends PanelProvider
             ->navigationItems([
                 NavigationItem::make('Repositorio Github')
                     ->url('https://github.com/jnicolas1/filamentphp-intranet', shouldOpenInNewTab: true)
-                    ->icon('heroicon-o-presentation-chart-line')
+                    ->icon('heroicon-o-heart')
                     ->sort(3)
-            ]);
+            ])
+            ->topNavigation()//permite poner la barra lateral que sea ahora el top
+            //aqui creamos un nuevo item al lado derecho  y es solo visible para administrador
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Admin')
+                    ->url('admin')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->visible(fn(): bool => auth()->user()?->hasAnyRole([
+                        'admin',
+                        'general_manager',
+                        'super_admin',
+                    ]))
+            ])
             ;
     }
 }

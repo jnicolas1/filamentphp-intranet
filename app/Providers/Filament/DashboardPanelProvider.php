@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -58,6 +59,15 @@ class DashboardPanelProvider extends PanelProvider
             //plugin para usar shield
             ->plugins([
                 \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make()
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Personal')
+                    ->url('personal')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->visible(fn(): bool => auth()->user()?->hasAnyRole([
+                        'super_admin',
+                    ]))
             ])
             ;
     }
